@@ -6,11 +6,22 @@ const AuthContext = createContext()
 export const AuthProvider = ({children})=>{
     const [user,setUser] = useState()
     
-    const signOut = ()=>{}
+    const signOut = ()=>{
+        supabase.auth.signOut()
+    }
+
     useEffect(() => {
         supabase.auth.getSession().then(({data:{session}})=>{
             setUser(session?.user ?? null)
         })
+        // listner to listion any change happen with session like logout 
+        // prone to memory leak in react because we have subscribed to the listners 
+        const {data:listner} = supabase.auth.onAuthStateChange((_,session)=>{
+            setUser(session?.user ?? null)
+        });
+        return()=>{
+            listner.subscription.unsubscribe()
+        }
     }, [])
     
     const signInUserGithub = () => {
