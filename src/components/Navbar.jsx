@@ -78,17 +78,31 @@ const Navbar = () => {
       </div>
 
       {/* desktop auth */}
-      <div>
-        <div>
-          {user ? (
-            <div>
-              <span>{displayName}</span>
-            </div>
-          ) : (
-            <button onClick={signInUserGithub}>sign in with github</button>
-          )}
-        </div>
+      <div className="hidden md:flex items-center">
+        {user ? (
+          <div className="flex items-center space-x-4">
+            {user.user_metadata.avatar_url && (
+              <img
+                src={user.user_metadata.avatar_url}
+                alt="user profile pic"
+                className="w-8 h-8 rounded-full object-cover"
+              />
+            )}
+            <span className="text-gray-300">{displayName}</span>
+            <button onClick={signOut} className="bg-red-500 px-3 py-1 rounded">
+              Sign Out
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={signInUserGithub}
+            className="bg-blue-500 px-3 py-1 rounded"
+          >
+            sign in with github
+          </button>
+        )}
       </div>
+
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-[rgba(10,10,10,0.9)]">
