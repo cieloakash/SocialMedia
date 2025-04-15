@@ -75,7 +75,7 @@ const LikeButton = ({ postId }) => {
   if (error) {
     return <div> Error: {error.message}</div>;
   }
-  console.log("existing vote", allVotes);
+  // console.log("existing vote", allVotes);
   const likes = allVotes?.filter((vote) => vote.vote === 1).length || 0;
   const dislikes = allVotes?.filter((vote) => vote.vote === -1).length || 0;
   const userVote = allVotes?.find((vote) => vote.user_id === user?.id)?.vote;
