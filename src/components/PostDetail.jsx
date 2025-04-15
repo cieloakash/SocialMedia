@@ -2,6 +2,7 @@ import React from 'react'
 import {useQuery} from '@tanstack/react-query'
 import { supabase } from '../supabse-client'
 import LikeButton from './LikeButton'
+import CommentSection from './CommentSection'
 
 const fetchSinglePost = async (id)=>{
     const {data,error} = await supabase.from("posts").select("").eq("id",id).single()
@@ -22,8 +23,6 @@ const PostDetail = ({postId}) => {
         return <div>Loading posts...</div>
     }
     if(error) return <div>Error: {error.message}</div>
-
-    console.log(data);
     
   return (
     <div className="space-y-6 px-20">
@@ -42,7 +41,8 @@ const PostDetail = ({postId}) => {
       Posted on: {new Date(data.created_at).toLocaleDateString()}
     </p>
     <LikeButton postId={postId}/>
- 
+    <CommentSection postId={postId} />
+    
   </div>
   )
 }
