@@ -26,7 +26,7 @@ const PostDetail = ({postId}) => {
     console.log(data);
     
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-20">
     <h2 className="text-6xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
       {data?.title}
     </h2>
