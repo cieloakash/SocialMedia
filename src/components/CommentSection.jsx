@@ -86,7 +86,6 @@ const CommentSection = ({ postId }) => {
   if (error) {
     return <div> Error: {error.message}</div>;
   }
-  console.log(fetchedAllComments);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -95,7 +94,6 @@ const CommentSection = ({ postId }) => {
     setNewComment("");
   };
   const commentTree = fetchedAllComments ? singleCommentTree(fetchedAllComments):[]
-console.log("comon tree",commentTree);
 
   return (
     <div className="mt-6">
@@ -128,7 +126,7 @@ console.log("comon tree",commentTree);
       )}
       {/* comment display  */}
       <div className="space-y-4">
-        {commentTree.map((comment, key) => (
+        {commentTree.map((comment,key) => (
           <CommentItem key={key} comment={comment} postId={postId} />
         ))}
       </div>
