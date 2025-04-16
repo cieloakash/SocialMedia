@@ -9,9 +9,7 @@ const PostItem = ({ post }) => {
         <div className="w-80 h-76 bg-[rgb(24,27,32)] border border-[rgb(84,90,106)] rounded-[20px] text-white flex flex-col p-5 overflow-hidden transition-colors duration-300 group-hover:bg-gray-800">
           {/* Header: Avatar and Title */}
           <div className="flex items-center space-x-2">
-            {console.log("value post from postItem",post)}
             {post.profile_pic ? (
-              
               <img
                 src={post.profile_pic}
                 alt="User Avatar"
