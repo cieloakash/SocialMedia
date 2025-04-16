@@ -100,7 +100,7 @@ const CreatePost = () => {
         {isPending ? "Creating..." : "Create Post"}
       </button>
 
-      {isError && <p className="text-red-500"> Error creating post.</p>}
+      {isError && <p className="text-red-500"> Error: creating post.</p>}
     </form>
   );
 };

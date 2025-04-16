@@ -28,7 +28,7 @@ const PostItem = ({ post }) => {
           {/* Image Banner */}
           <div className="mt-2 flex-1">
             <img
-              src={post.imageurl}
+              src={JSON.parse(post.imageurl).publicUrl}
               alt={post.title}
               className="w-full rounded-[20px] object-cover max-h-[150px] mx-auto"
             />

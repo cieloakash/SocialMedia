@@ -31,7 +31,7 @@ const PostDetail = ({postId}) => {
     </h2>
     {data?.imageurl && (
       <img
-        src={data.imageurl}
+        src={JSON.parse(data.imageurl).publicUrl}
         alt={data?.title}
         className="mt-4 rounded object-cover w-full h-64"
       />
