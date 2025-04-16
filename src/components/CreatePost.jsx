@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { supabase } from "../supabse-client";
 import { useAuth } from "../context/AuthContext";
+import { fetchAllCommunity } from "./CommunityList";
 // insert data in table
 const fnCreatePost = async (post, imageFile) => {
   const filePath = `${post.title}-${Date.now()}-${imageFile.name}`;
@@ -28,11 +29,15 @@ const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedFile, setSelectedFile] = useState("");
-  const {user} = useAuth()
+  const { user } = useAuth();
+  const [communityId,setCommunityId] = useState("")
   // making request to supabase table run query to manage client and server side data
   // two hooks primary use when woking with react query for making request
   // useQueryHook and useMuation Hook -- update,edit to service
-
+  const { data: allcommunityData } = useQuery({
+    queryKey: ["communities"],
+    queryFn: fetchAllCommunity,
+  });
   const { mutate, isPending, isError } = useMutation({
     mutationFn: (data) => {
       return fnCreatePost(data.post, data.imageFile);
@@ -42,8 +47,16 @@ const CreatePost = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!selectedFile) return;
-    mutate({ post: { title, content,profile_pic:user?.user_metadata.avatar_url }, imageFile: selectedFile });
+    mutate({
+      post: { title, content, profile_pic: user?.user_metadata.avatar_url,community_id:communityId },
+      imageFile: selectedFile,
+    });
   };
+
+  const handleOptionCommunitySelect=(e)=>{
+    const value = e.target.value;
+    setCommunityId(value ? parseInt(value): null)
+  }
 
   const handleFileChange = (e) => {
     // check file has value and if multiple file choosen then choose first one
@@ -52,6 +65,7 @@ const CreatePost = () => {
       setSelectedFile(e.target.files[0]);
     }
   };
+
 
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-4">
@@ -79,6 +93,17 @@ const CreatePost = () => {
           onChange={(e) => setContent(e.target.value)}
           className="w-full border border-white/10 bg-transparent p-2 rounded"
         />
+      </div>
+      <div>
+        <label>select community:</label>
+        <select id="community" onChange={handleOptionCommunitySelect}>
+          <option value={""} className="bg-black" >choose community</option>
+          {
+           allcommunityData?.map((community)=>(
+            <option key={community.id} value={community.id} className="bg-black" >{community.name}</option>
+           )) 
+          }
+        </select>
       </div>
       <div>
         <label htmlFor="image" className="block mb-2 font-medium">
