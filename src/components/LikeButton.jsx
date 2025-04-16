@@ -54,7 +54,7 @@ const LikeButton = ({ postId }) => {
   } = useQuery({
     queryKey: ["vote", postId],
     queryFn: () => fetchAllVotes(postId),
-    refetchInterval: 3000,
+    // refetchInterval: 3000,
   });
 
   // insertng data into database
